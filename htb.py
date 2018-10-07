@@ -27,7 +27,7 @@ if args[1] == "chat":
 	
 	def background():
 	        while True:
-	            time.sleep(0.5)
+	            time.sleep(5)
 	            get_last_message()
 	
 	threading1 = threading.Thread(target=background)
