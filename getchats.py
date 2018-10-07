@@ -17,7 +17,6 @@ def get_message():
 
 def get_last_message():
 	while True:
-		sleep(5)
 		r = requests.post("https://www.hackthebox.eu/api/shouts/get/initial/html/1?api_token="+apikey)
 		js = json.loads(r.content)
 		html = js['html'][0]
