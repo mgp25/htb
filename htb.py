@@ -5,6 +5,7 @@ import time
 import sys
 from getchats import apikey
 #made by r4j1337
+#i had to increase the load time due to orders from htb admins :(
 args = sys.argv
 if len(args) == 1:
 	print """\033[96m[+] \033[92mTry These Commands:
