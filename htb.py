@@ -3,33 +3,40 @@ import threading
 import requests
 import time
 import sys
+import netifaces as net
 from getchats import apikey
 #made by r4j1337
-#i had to increase the load time due to orders from htb admins :(
 args = sys.argv
 if len(args) == 1:
 	print """\033[96m[+] \033[92mTry These Commands:
 
 \033[96m[+] \033[92mhtb chat  {Starts a terminal chat client}
+\033[96m[+] \033[92mhtb chat shout {See all messages like resets}
 \033[96m[+] \033[92mhtb reset machine  {Resets A Machine}
 \033[96m[+] \033[92mhtb machine/challenge pro/sucks {rates a machine or challenge}
 \033[96m[+] \033[92mhtb sendmsg yourmessage {send a quick message to shoutbox}
 \033[96m[+] \033[92mhtb respect user {respects a user}
-\033[96m[+] \033[92mhtb startvpn {starts openvpn}
+\033[96m[+] \033[92mhtb startvpn {starts openvpn in background}
+\033[96m[+] \033[92mhtb ip  {Shows your plain hackthebox ip}
 	"""
 	exit()
 from os import system
 if args[1] == "chat":
 	system("clear")
-	print "\033[96m[+] \033[92mTip: You Can Send Any Message Just Type On The Terminal :)"
-	time.sleep(3)
+	print "\033[96m[+] \033[92mTip: You Can Send Any Message Just Type On The Terminal :) \n"
 	from getchats import *
 	get_message()
-	
+	try:
+		arg2 = args[2]
+	except:
+		arg2 = ""
 	def background():
 	        while True:
-	            time.sleep(10)
-	            get_last_message()
+	            time.sleep(5)
+	            if arg2 != "":
+	            	get_last_message(quite=False)
+	            else:
+	            	get_last_message(quite=True)
 	
 	threading1 = threading.Thread(target=background)
 	threading1.daemon = True
@@ -60,6 +67,10 @@ if args[1] == "chat":
 			if mymessage == "/help":
 				print help
 			elif mymessage == "":
+				sys.stdout.write("\033[F")
+				sys.stdout.write("\033[K")
+			elif mymessage == "/quite":
+				quite = False
 				sys.stdout.write("\033[F")
 				sys.stdout.write("\033[K")
 			else:
@@ -132,5 +143,12 @@ elif args[1] == "sendmsg":
 		else:
 			print 'There was some problem'
 elif args[1] == "startvpn":
-	cmd = "openvpn MYVPNFILE"
+	cmd = "openvpn --config htb.ovpn --daemon"
 	system(cmd)
+elif args[1] == "ip":
+	try:
+  		net.ifaddresses('tun0')
+  		ip = net.ifaddresses('tun0')[net.AF_INET][0]['addr']
+  		print ip
+	except:
+  		print "[+] Please connect first"

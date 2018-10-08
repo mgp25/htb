@@ -2,7 +2,6 @@ import json
 import requests
 from parse import parse
 import warnings
-from time import sleep
 warnings.filterwarnings("ignore")
 apikey = "MYAPIKEY"
 def get_message():
@@ -15,12 +14,19 @@ def get_message():
 		if 'https://www.hackthebox.eu/storage/avatars/' in x:
 			parse(x)
 
-def get_last_message():
+quite = True
+def get_last_message(quite):
 	while True:
 		r = requests.post("https://www.hackthebox.eu/api/shouts/get/initial/html/1?api_token="+apikey)
 		js = json.loads(r.content)
 		html = js['html'][0]
-		if 'https://www.hackthebox.eu/storage/avatars/' in html:
+		if quite == True:
+			if 'https://www.hackthebox.eu/storage/avatars/' in html:
+				if html != lastmsg:
+					parse(html)
+					global lastmsg
+					lastmsg = html
+		else:
 			if html != lastmsg:
 				parse(html)
 				global lastmsg
