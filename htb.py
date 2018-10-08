@@ -143,7 +143,7 @@ elif args[1] == "sendmsg":
 		else:
 			print 'There was some problem'
 elif args[1] == "startvpn":
-	cmd = "openvpn --config htb.ovpn --daemon"
+	cmd = "openvpn --config MYVPNFILE --daemon"
 	system(cmd)
 elif args[1] == "ip":
 	try:
