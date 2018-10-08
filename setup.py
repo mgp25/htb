@@ -1,9 +1,13 @@
-	#!/usr/bin/python
+#!/usr/bin/python
 from os import geteuid, system
 from getpass import getpass
 import requests
 import json
-from bs4 import BeautifulSoup
+try:
+	from bs4 import BeautifulSoup
+except:
+	system("pip install bs4")
+	from bs4 import BeautifulSoup
 #made by r4j1337
 if geteuid() != 0:
     exit("You need to have root privileges to run this script.")
@@ -49,7 +53,6 @@ with open('getchats.py', 'w') as file:
   file.write(filedata)
 system('pip install netifaces')
 system('chmod +x htb.py')
-system('pip install bs4')
 system("apt -y install openvpn")
 system('ln -s `pwd`/htb.py /usr/bin/htb')
 print "\033[96m[+] \033[92mSetup Successful"
