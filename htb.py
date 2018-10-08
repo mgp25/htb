@@ -32,7 +32,7 @@ if args[1] == "chat":
 		arg2 = ""
 	def background():
 	        while True:
-	            time.sleep(5)
+	            time.sleep(10)
 	            if arg2 != "":
 	            	get_last_message(quite=False)
 	            else:
