@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from os import geteuid, system
+from os import system, getcwd
 from getpass import getpass
 import requests
 import json
@@ -9,9 +9,6 @@ except:
 	system("pip install bs4")
 	from bs4 import BeautifulSoup
 #made by r4j1337
-if geteuid() != 0:
-    exit("You need to have root privileges to run this script.")
-
 print "\033[96m[+] \033[92mMade By r4j1337"
 print "\033[96m[+] \033[92mtwitter: https://twitter.com/r4j1337"
 print "\033[96m[+] \033[92mhtb: https://www.hackthebox.eu/home/users/profile/13243"
@@ -51,9 +48,17 @@ with open('getchats.py', 'r') as file :
 filedata = filedata.replace(textsearch, api_key)
 with open('getchats.py', 'w') as file:
   file.write(filedata)
+pwd = getcwd()
+textsearch = "MYVPNFILE"
+with open('htb.py', 'r') as file :
+  filedata = file.read()
+
+filedata = filedata.replace(textsearch, pwd+"/htb.ovpn")
+with open('htb.py', 'w') as file:
+  file.write(filedata)
 system('pip install netifaces')
 system('chmod +x htb.py')
-system("apt -y install openvpn")
-system('ln -s `pwd`/htb.py /usr/bin/htb')
+system("sudo apt -y install openvpn")
+system('sudo ln -s `pwd`/htb.py /usr/bin/htb')
 print "\033[96m[+] \033[92mSetup Successful"
 print "\033[96m[+] \033[92mType htb on your terminal"
